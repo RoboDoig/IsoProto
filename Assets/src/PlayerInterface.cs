@@ -55,6 +55,7 @@ public class PlayerInterface : MonoBehaviour
                 uiManager.UpdateActionInfo(selectedTile.actionList);
 
                 updateAction = TileSelected;
+                Debug.Log("switching to tile selected");
             }
         }
 
