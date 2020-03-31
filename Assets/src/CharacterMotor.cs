@@ -10,7 +10,7 @@ public class CharacterMotor : MonoBehaviour
 
     Tilemap tilemap;
     Pathfinder pathfinder;
-    List<Pathfinder.Node> path;
+    public List<Pathfinder.Node> path;
     Vector3Int pathDestinationCell;
 
     // Start is called before the first frame update
