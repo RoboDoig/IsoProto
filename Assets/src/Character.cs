@@ -48,16 +48,4 @@ public class Character : MonoBehaviour
             updateAction = Idle;
         }
     }
-
-    void OnDrawGizmos()
-    {
-        if (charMotor.path != null)
-        {
-            foreach (Pathfinder.Node n in charMotor.path)
-            {
-                Gizmos.color = Color.black;
-                Gizmos.DrawCube(n.position, Vector3.one);
-            }
-        }
-    }
 }
