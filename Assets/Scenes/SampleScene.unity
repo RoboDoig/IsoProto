@@ -1869,7 +1869,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floorTilemap: {fileID: 85004848}
   buildTilemap: {fileID: 1689945509}
-  worldSize: {x: 500, y: 500}
+  worldSize: {x: 100, y: 100}
   seed: 1
   scale: 50
   octaves: 4
@@ -1888,7 +1888,7 @@ MonoBehaviour:
   treeTile: {fileID: 11400000, guid: a04f04aeb6ed1a5478a0fa030d95fddc, type: 2}
   foodTile: {fileID: 11400000, guid: 7aef1cdbfdbfc924ca1894dfe9965a43, type: 2}
   stoneTile: {fileID: 11400000, guid: 0385c225773c1114ab3e69f377a127cf, type: 2}
-  nAgentsToPlace: 100
+  nAgentsToPlace: 5
   basicCharacter: {fileID: 4348315112009891835, guid: da02c86ec2925ff4db2906204d75aa4f,
     type: 3}
 --- !u!114 &1127596135

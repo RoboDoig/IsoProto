@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Character : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Character : MonoBehaviour
     private void Start()
     {
         charMotor = GetComponent<CharacterMotor>();
-        idleTimer = Random.Range(20f, 100f);
+        idleTimer = Random.Range(0f, 10f);
         updateAction = Idle;
     }
 
@@ -25,27 +26,38 @@ public class Character : MonoBehaviour
     public void FindPath(Vector3Int destinationCell)
     {
         charMotor.FindPath(destinationCell);
+        updateAction = GoToDestination;
     }
 
     void Idle()
     {
-        idleTimer -= Time.deltaTime;
-        if (idleTimer <= 0f)
-        {
-            idleTimer = Random.Range(20f, 100f);
 
-            if (charMotor.FindPath(charMotor.GetCurrentCell() + new Vector3Int(Random.Range(-50, 50), Random.Range(-50, 50), 0)))
+    }
+
+    void GoToDestination()
+    {
+        if (charMotor.path != null && charMotor.path.Count > 0)
+        {
+            if (charMotor.MoveOnPath())
             {
-                updateAction = GoToRandomSpot;
+                updateAction = Idle;
             }
+        }
+        else
+        {
+            updateAction = Idle;
         }
     }
 
-    void GoToRandomSpot()
+    void OnDrawGizmos()
     {
-        if (charMotor.MoveOnPath())
+        if (charMotor.path != null)
         {
-            updateAction = Idle;
+            foreach (Pathfinder.Node n in charMotor.path)
+            {
+                Gizmos.color = Color.black;
+                Gizmos.DrawCube(n.position, Vector3.one);
+            }
         }
     }
 }

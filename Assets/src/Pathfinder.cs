@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour
 {
-
     public MapManager mapManager;
     Node[,] nodeGrid;
 
@@ -18,25 +17,17 @@ public class Pathfinder : MonoBehaviour
     public List<Node> FindPath(Vector3Int startPos, Vector3Int targetPos)
     {
         nodeGrid = CreateNodeGrid(mapManager.GetWorldTileData());
+        int gridMaxSize = nodeGrid.GetLength(0) * nodeGrid.GetLength(1);
         Node startNode = nodeGrid[startPos.x, startPos.y];
         Node targetNode = nodeGrid[targetPos.x, targetPos.y];
 
-        List<Node> openSet = new List<Node>();
+        Heap<Node> openSet = new Heap<Node>(gridMaxSize);
         HashSet<Node> closedSet = new HashSet<Node>();
         openSet.Add(startNode);
 
         while (openSet.Count > 0)
         {
-            Node currentNode = openSet[0];
-            for (int i = 1; i < openSet.Count; i++)
-            {
-                if (openSet[i].fCost < currentNode.fCost || openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost)
-                {
-                    currentNode = openSet[i];
-                }
-            }
-
-            openSet.Remove(currentNode);
+            Node currentNode = openSet.RemoveFirst();            
             closedSet.Add(currentNode);
 
             if (currentNode == targetNode)
@@ -143,13 +134,14 @@ public class Pathfinder : MonoBehaviour
         return nodeGrid;
     }
 
-    public class Node
+    public class Node : IHeapItem<Node>
     {
         public bool traversable;
         public Vector3Int position;
         public int gCost;
         public int hCost;
         public Node parent;
+        int heapIndex;
 
         public Node(bool _traversable, Vector3Int _position)
         {
@@ -163,6 +155,28 @@ public class Pathfinder : MonoBehaviour
             {
                 return gCost + hCost;
             }
+        }
+
+        public int HeapIndex
+        {
+            get
+            {
+                return heapIndex;
+            }
+            set
+            {
+                heapIndex = value;
+            }
+        }
+
+        public int CompareTo(Node nodeToCompare)
+        {
+            int compare = fCost.CompareTo(nodeToCompare.fCost);
+            if (compare == 0)
+            {
+                compare = hCost.CompareTo(nodeToCompare.hCost);
+            }
+            return -compare;
         }
     }
 }
