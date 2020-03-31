@@ -1476,9 +1476,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseTilemap: {fileID: 85004848}
+  buildTilemap: {fileID: 1689945509}
   selectorTilemap: {fileID: 1428262798}
   selectorTile: {fileID: 11400000, guid: 74a0f6c934278438db6360a6fccc4cd7, type: 2}
-  wallTile: {fileID: 0}
   mapManager: {fileID: 1127596134}
   uiManager: {fileID: 254816206}
 --- !u!1 &553838806
@@ -2263,7 +2263,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -3599,7 +3599,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2089206363}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 519420034}
+        m_MethodName: EnterBuildMode
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 94d1838129b83e74b917f6c758d88367,
+            type: 2}
+          m_ObjectArgumentAssemblyTypeName: WorldTile, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2089206363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3618,8 +3630,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300226, guid: a5994f41d8a85744d869f00e6828bb76, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

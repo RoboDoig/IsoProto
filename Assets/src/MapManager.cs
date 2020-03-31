@@ -137,6 +137,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    // TODO - what if we need to set on the floor?
     public void PlaceTile(WorldTile tile, Vector3Int position)
     {
         // if base tile open for placement etc...
@@ -145,6 +146,13 @@ public class MapManager : MonoBehaviour
         worldTileData[position.x, position.y].traversable = tile.traversable;
         worldTileData[position.x, position.y].openForPlacement = false;
 
+        // action data - TODO
+        List<GoapAction> tileActions = tile.GenerateActionList();
+        foreach (GoapAction action in tileActions)
+        {
+            worldTileData[position.x, position.y].actionList.Add(action);
+        }
+   
         // render the change
         buildTilemap.SetTile(position, tile);
     }

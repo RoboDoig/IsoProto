@@ -7,9 +7,10 @@ using UnityEngine.EventSystems;
 public class PlayerInterface : MonoBehaviour
 {
     public Tilemap baseTilemap;
+    public Tilemap buildTilemap;
     public Tilemap selectorTilemap;
     public TileBase selectorTile;
-    public WorldTile wallTile;
+    
     public MapManager mapManager;
     public UIManager uiManager;
 
@@ -17,6 +18,9 @@ public class PlayerInterface : MonoBehaviour
 
     private delegate void UpdateAction();
     private UpdateAction updateAction;
+
+    // Build mode
+    private WorldTile currentBuildPlaceTile;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +35,13 @@ public class PlayerInterface : MonoBehaviour
         updateAction();
     }
 
+    public void EnterBuildMode(WorldTile tile)
+    {
+        currentBuildPlaceTile = tile;
+        updateAction = BuildMode;
+    }
+
+    // Update Modes
     void Default()
     {
         selectorTilemap.SetTile(lastSelectedCell, null);
@@ -55,7 +66,6 @@ public class PlayerInterface : MonoBehaviour
                 uiManager.UpdateActionInfo(selectedTile.actionList);
 
                 updateAction = TileSelected;
-                Debug.Log("switching to tile selected");
             }
         }
 
@@ -68,6 +78,50 @@ public class PlayerInterface : MonoBehaviour
         {
             uiManager.ClearActionInfo();
             updateAction = Default;
+        }
+    }
+
+    void BuildMode()
+    {
+        selectorTilemap.SetTile(lastSelectedCell, null);
+
+        // Get location
+        Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Get tile at that point
+        Vector3Int selectedCell = baseTilemap.WorldToCell(point);
+        lastSelectedCell = selectedCell;
+
+        // If in world bounds
+        if (selectedCell.x >= 0 && selectedCell.y >= 0)
+        {
+            // Update UI
+            uiManager.UpdateTextInfo(mapManager.GetWorldTileData()[selectedCell.x, selectedCell.y]);
+
+            // Preview selection
+            if (mapManager.GetWorldTileData()[selectedCell.x, selectedCell.y].openForPlacement)
+            {
+                selectorTilemap.SetTile(selectedCell, currentBuildPlaceTile);
+            }
+            else
+            {
+                selectorTilemap.SetTile(selectedCell, null);
+            }
+
+            // Placement
+            if (Input.GetMouseButtonDown(0) && mapManager.GetWorldTileData()[selectedCell.x, selectedCell.y].openForPlacement)
+            {
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    mapManager.PlaceTile(currentBuildPlaceTile, selectedCell);
+                }
+            }
+
+            // Exit
+            if (Input.GetMouseButtonDown(1))
+            {
+                updateAction = Default;
+            }
         }
     }
 }
