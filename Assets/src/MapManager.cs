@@ -66,30 +66,30 @@ public class MapManager : MonoBehaviour
 
     }
 
+    float lastVal = 0f;
     IEnumerator TileUpdateCoroutine()
     {
-        float coroutineTime = 0;
+        float coroutineTime = 0f;
 
         // forward pass
         for (int x = 0; x < worldSize.x; x++)
         {
             for (int y = 0; y < worldSize.y; y++)
             {
-                coroutineTime += Time.deltaTime;
-
-                worldTileData[x, y].timeAlive += coroutineTime;
+                worldTileData[x, y].timeAlive = lastVal + Time.deltaTime;
+                lastVal = worldTileData[x, y].timeAlive;
+                Debug.Log("forward" + worldTileData[x, y].timeAlive.ToString());
                 yield return null;
             }
         }
 
-        // backward pass
-        for (int x = worldSize.x-1; x > -1; x--)
+        for (int x = worldSize.x-1; x >= 0; x--)
         {
-            for (int y = worldSize.y-1; y > -1; y--)
+            for (int y = worldSize.y-1; y >= 0; y--)
             {
-                coroutineTime += Time.deltaTime;
-
-                worldTileData[x, y].timeAlive += coroutineTime;
+                worldTileData[x, y].timeAlive = lastVal + Time.deltaTime;
+                lastVal = worldTileData[x, y].timeAlive;
+                Debug.Log("backward" + worldTileData[x, y].timeAlive.ToString());
                 yield return null;
             }
         }
