@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -56,6 +57,28 @@ public class MapManager : MonoBehaviour
         GenerateActionList();
         RenderMap();
         PlaceAgents();
+
+        StartCoroutine("TileUpdateCoroutine");
+    }
+
+    void Update()
+    {
+
+    }
+
+    IEnumerator TileUpdateCoroutine()
+    {
+        for (int x = 0; x < worldSize.x; x++)
+        {
+            for (int y = 0; y < worldSize.y; y++)
+            {
+                Debug.Log(worldTileData[x, y].floorTile.type);
+                Debug.Log(x);
+                yield return null;
+            }
+        }
+
+        StartCoroutine("TileUpdateCoroutine");
     }
 
     void GenerateMapData(int width, int height)

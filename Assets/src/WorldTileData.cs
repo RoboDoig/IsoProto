@@ -18,6 +18,8 @@ public class WorldTileData
     public bool traversable;
     public bool openForPlacement;
 
+    public float timeAlive;
+
     public List<GoapAction> actionList;
 
     public WorldTileData(Vector3Int _position, WorldTile _floorTile, WorldTile _buildTile, float _floorNoiseValue, float _buildNoiseValue)
