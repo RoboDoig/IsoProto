@@ -22,4 +22,9 @@ public class WorldTile : Tile
 
         return actionList;
     }
+
+    public virtual WorldTile OnUpdate(WorldTileData data)
+    {
+        return null;
+    }
 }

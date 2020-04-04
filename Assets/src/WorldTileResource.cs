@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Resource Tile", menuName = "Tiles/Resource Tile")]
 public class WorldTileResource : WorldTile
 {
+    public float growTime;
+    public WorldTile growsInto;
 
     public override List<GoapAction> GenerateActionList()
     {
@@ -14,4 +16,14 @@ public class WorldTileResource : WorldTile
         return actionList;
     }
 
+    public override WorldTile OnUpdate(WorldTileData data)
+    {
+        if (data.timeAlive > growTime)
+        {
+            return growsInto;
+        } else
+        {
+            return null;
+        }
+    }
 }

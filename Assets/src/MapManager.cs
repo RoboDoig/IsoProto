@@ -66,33 +66,44 @@ public class MapManager : MonoBehaviour
 
     }
 
-    float lastVal = 0f;
+    // Background tile sweep update
+    float timeVal = 0f;
     IEnumerator TileUpdateCoroutine()
     {
-        float coroutineTime = 0f;
-
+        float delta = 0f;
         // forward pass
         for (int x = 0; x < worldSize.x; x++)
         {
+            delta = Time.deltaTime;
+            timeVal += Time.deltaTime;
             for (int y = 0; y < worldSize.y; y++)
             {
-                worldTileData[x, y].timeAlive = lastVal + Time.deltaTime;
-                lastVal = worldTileData[x, y].timeAlive;
-                Debug.Log("forward" + worldTileData[x, y].timeAlive.ToString());
-                yield return null;
+                worldTileData[x, y].timeAlive = timeVal;
+
+                WorldTile tileUpdate = worldTileData[x, y].buildTile.OnUpdate(worldTileData[x, y]);
+                if (tileUpdate != null)
+                    PlaceTile(tileUpdate, worldTileData[x, y].position);
+
             }
+            yield return null;
         }
 
-        for (int x = worldSize.x-1; x >= 0; x--)
-        {
-            for (int y = worldSize.y-1; y >= 0; y--)
-            {
-                worldTileData[x, y].timeAlive = lastVal + Time.deltaTime;
-                lastVal = worldTileData[x, y].timeAlive;
-                Debug.Log("backward" + worldTileData[x, y].timeAlive.ToString());
-                yield return null;
-            }
-        }
+        // backward pass
+        //for (int x = worldSize.x-1; x >= 0; x--)
+        //{
+        //    for (int y = worldSize.y-1; y >= 0; y--)
+        //    {
+        //        worldTileData[x, y].timeAlive = lastVal + Time.deltaTime;
+        //        lastVal = worldTileData[x, y].timeAlive;
+
+        //        WorldTile tileUpdate = worldTileData[x, y].buildTile.OnUpdate(worldTileData[x, y]);
+        //        if (tileUpdate != null)
+        //            PlaceTile(tileUpdate, worldTileData[x, y].position);
+
+        //        //yield return null;
+        //    }
+        //    yield return null;
+        //}
 
         StartCoroutine("TileUpdateCoroutine");
     }

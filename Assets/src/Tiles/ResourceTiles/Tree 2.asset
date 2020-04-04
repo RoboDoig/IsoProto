@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f14955748d0b5444fa5e21185b6cec27, type: 3}
-  m_Name: Tree 1
+  m_Name: Tree 2
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300310, guid: a5994f41d8a85744d869f00e6828bb76, type: 3}
+  m_Sprite: {fileID: 21300348, guid: a5994f41d8a85744d869f00e6828bb76, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
@@ -43,4 +43,4 @@ MonoBehaviour:
   - itemType: {fileID: 11400000, guid: 60c7cc82042856643a0a895e874c02f4, type: 2}
     amount: 10
   growTime: 20
-  growsInto: {fileID: 11400000, guid: cb64c6d727762f34aa89722868cc7efa, type: 2}
+  growsInto: {fileID: 0}
