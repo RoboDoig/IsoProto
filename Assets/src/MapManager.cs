@@ -68,12 +68,28 @@ public class MapManager : MonoBehaviour
 
     IEnumerator TileUpdateCoroutine()
     {
+        float coroutineTime = 0;
+
+        // forward pass
         for (int x = 0; x < worldSize.x; x++)
         {
             for (int y = 0; y < worldSize.y; y++)
             {
-                Debug.Log(worldTileData[x, y].floorTile.type);
-                Debug.Log(x);
+                coroutineTime += Time.deltaTime;
+
+                worldTileData[x, y].timeAlive += coroutineTime;
+                yield return null;
+            }
+        }
+
+        // backward pass
+        for (int x = worldSize.x-1; x > -1; x--)
+        {
+            for (int y = worldSize.y-1; y > -1; y--)
+            {
+                coroutineTime += Time.deltaTime;
+
+                worldTileData[x, y].timeAlive += coroutineTime;
                 yield return null;
             }
         }
@@ -189,6 +205,7 @@ public class MapManager : MonoBehaviour
         placedAgent.transform.position = placePosition;
     }
 
+    // Replace with get/set? TODO
     public WorldTileData[,] GetWorldTileData()
     {
         return worldTileData;

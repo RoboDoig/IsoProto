@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public Text openText;
     public Text floorNoiseText;
     public Text buildNoiseText;
+    public Text timeAliveText;
 
     [Header("Action Description")]
     public Transform actionDescriptionContent;
@@ -30,6 +31,8 @@ public class UIManager : MonoBehaviour
 
         floorNoiseText.text = "Noise: " + tileData.floorNoiseValue.ToString();
         buildNoiseText.text = "Build: " + tileData.buildNoiseValue.ToString();
+
+        timeAliveText.text = "Time Alive: " + tileData.timeAlive.ToString();
     }
 
     public void UpdateActionInfo(List<GoapAction> actionList)

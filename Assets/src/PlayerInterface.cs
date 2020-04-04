@@ -54,8 +54,9 @@ public class PlayerInterface : MonoBehaviour
         lastSelectedCell = selectedCell;
 
         // Update UI
-        if (selectedCell.x >= 0 && selectedCell.y >= 0)
-            uiManager.UpdateTextInfo(mapManager.GetWorldTileData()[selectedCell.x, selectedCell.y]);
+        WorldTileData[,] worldTileData = mapManager.GetWorldTileData();
+        if (selectedCell.x >= 0 && selectedCell.y >= 0 && selectedCell.x < worldTileData.GetLength(0) && selectedCell.y < worldTileData.GetLength(1))
+            uiManager.UpdateTextInfo(worldTileData[selectedCell.x, selectedCell.y]);
 
         if (Input.GetMouseButtonDown(0))
         {

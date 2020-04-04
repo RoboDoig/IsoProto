@@ -51,5 +51,7 @@ public class WorldTileData
 
         floorNoiseValue = _floorNoiseValue;
         buildNoiseValue = _buildNoiseValue;
+
+        timeAlive = 0f;
     }
 }
