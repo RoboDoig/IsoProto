@@ -140,13 +140,13 @@ public class MapManager : MonoBehaviour
     // TODO - what if we need to set on the floor?
     public void PlaceTile(WorldTile tile, Vector3Int position)
     {
-        // if base tile open for placement etc...
+        // if base tile open for placement etc... maybe gets dealt with by calling class..
 
         // update tile data
         worldTileData[position.x, position.y].traversable = tile.traversable;
         worldTileData[position.x, position.y].openForPlacement = false;
 
-        // action data - TODO
+        // action data 
         List<GoapAction> tileActions = tile.GenerateActionList();
         foreach (GoapAction action in tileActions)
         {
